@@ -1,0 +1,91 @@
+basePath: /api/v1
+definitions:
+  models.ErrorResponse:
+    properties:
+      message:
+        example: Error message
+        type: string
+    type: object
+  models.UpsertUserPhotoResonse:
+    properties:
+      message:
+        example: "1"
+        type: string
+      photo_url:
+        example: http://localhost:8080/static/1.jpg
+        type: string
+    type: object
+info:
+  contact:
+    email: santorsilas@gmail.com
+    name: Silas Ribeiro
+  description: Esta api salvar imagem de usuário
+  termsOfService: http://swagger.io/terms/
+  title: Photo API
+  version: "1.0"
+paths:
+  /users/{id}/photo:
+    get:
+      description: Recupera foto de usuário utilizando o id
+      parameters:
+      - description: ID do usuário
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UpsertUserPhotoResonse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Recupera foto de usuário
+      tags:
+      - users
+    patch:
+      consumes:
+      - multipart/form-data
+      description: Salva foto de usuário utilizando o id
+      parameters:
+      - description: ID do usuário
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Foto do usuário
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UpsertUserPhotoResonse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Salva foto de usuário
+      tags:
+      - users
+swagger: "2.0"
